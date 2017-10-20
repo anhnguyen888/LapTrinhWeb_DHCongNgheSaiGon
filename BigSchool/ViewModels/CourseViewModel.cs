@@ -9,9 +9,11 @@ namespace BigSchool.ViewModels
 {
     public class CourseViewModel
     {
+        [StringLength(100, ErrorMessage ="Place less than 100 characters")]
         [Required(ErrorMessage ="Place is Required")]
         public string Place { get; set; }
 
+        [FutureDate]
         [Required(ErrorMessage = "Date is Required")]
         public string Date { get; set; }
 

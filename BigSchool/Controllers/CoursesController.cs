@@ -23,5 +23,17 @@ namespace BigSchool.Controllers
 
             return View(viewModel);
         }
+
+        [HttpPost]
+        public ActionResult Create(CourseViewModel courseViewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                ModelState.AddModelError("", "Loi");
+                courseViewModel.Categories = dbContext.Categories;
+                return View(courseViewModel);
+            }
+            return View();
+        }
     }
 }
