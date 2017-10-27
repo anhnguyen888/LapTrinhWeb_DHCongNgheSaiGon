@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using System;
 using Microsoft.AspNet.Identity;
 using System.Linq;
+using System.Data.Entity;
 
 namespace BigSchool.Controllers
 {
@@ -47,7 +48,7 @@ namespace BigSchool.Controllers
                 var course = new Course()
                 {
                     Place = courseViewModel.Place,
-                    DateTime = DateTime.Parse(courseViewModel.Date + " " + courseViewModel.Time),
+                    DateTime = courseViewModel.GetDateTime(),
                     CategoryId = courseViewModel.CategoryId,
                     LecturerId = userId
                 };
@@ -64,13 +65,17 @@ namespace BigSchool.Controllers
             }
         }
 
+        [Authorize]
         public ActionResult ManageCourses()
         {
             try
             {
                 var useId = User.Identity.GetUserId();
                 //linq using lamda
-                var courses = dbContext.Courses.Where(c => c.LecturerId == useId);
+                var courses = dbContext.Courses
+                    .Include(l => l.Lecturer)
+                    .Include(c => c.Category)
+                    .Where(c => c.LecturerId == useId);
                 return View(courses);
             }
             catch (Exception ex)

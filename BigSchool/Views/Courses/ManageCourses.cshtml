@@ -8,25 +8,28 @@
 <h2>Manage Courses</h2>
 
 <ul class="courses">
-    <li>
-        <div class="date-time">
-            <div class="date">
-                12
+    @foreach (var course in Model)
+    {
+        <li>
+            <div class="date-time">
+                <div class="date">
+                    @course.DateTime.Month.ToString()
+                </div>
+                <div class="time">
+                    @course.DateTime.Day.ToString()
+                </div>
             </div>
-            <div class="time">
-                04
+            <div class="course-detail">
+                <div class="detail">
+                    @course.Lecturer.UserName <br />
+                    @course.Category.Name
+                </div>
+                <div class="detail-action">
+                    Edit | Delete
+                </div>
             </div>
-        </div>
-        <div class="course-detail">
-            <div class="detail">
-                Nguyen dinh anh <br/>
-                Design
-            </div>
-            <div class="detail-action">
-                Edit | Delete
-            </div>
-        </div>
-    </li>
+        </li>
+    }
 </ul>
 <div class="clear"></div>
 
