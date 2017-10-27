@@ -17,6 +17,7 @@ namespace BigSchool.ViewModels
         [Required(ErrorMessage = "Date is Required")]
         public string Date { get; set; }
 
+        [ValidTime]
         [Required(ErrorMessage = "Time is Required")]
         public string Time { get; set; }
 
