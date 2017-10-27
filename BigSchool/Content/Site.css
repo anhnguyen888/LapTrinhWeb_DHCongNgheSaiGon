@@ -36,3 +36,30 @@ textarea {
         color: white;
     }
 
+/* Course */
+.clear{
+    clear:both;
+}
+.courses li {
+    list-style: none;
+    position: relative;
+    
+}
+
+.date-time {
+    width: 10%;
+    float: left;
+    background: #f9c1c1;
+    text-align: center;
+    border-radius: 8px;
+    line-height: 2em;
+}
+
+.date {
+    border-bottom: 1px solid;
+}
+.course-detail {
+    width: 70%;
+    float: left;
+    padding-left: 20px;
+}
