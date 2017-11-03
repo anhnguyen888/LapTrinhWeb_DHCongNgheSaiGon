@@ -62,3 +62,8 @@ textarea {
     float: left;
     padding-left: 20px;
 }
+ul.courses li{
+    clear:both;
+    margin-bottom:10px;
+    display:flex;
+}

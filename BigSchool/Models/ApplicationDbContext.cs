@@ -11,6 +11,7 @@ namespace BigSchool.Models
     {
         public DbSet<Course> Courses { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<Attendance> Attendances { get; set; }
 
         public ApplicationDbContext()
             : base("BigSchoolConnection", throwIfV1Schema: false)
