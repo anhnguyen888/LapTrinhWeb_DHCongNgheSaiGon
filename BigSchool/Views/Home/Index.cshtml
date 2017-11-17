@@ -26,7 +26,18 @@
 
                     @if (Model.ShowAction)
                     {
-                        <a class="btn btn-info" href="@Url.Action("Attend","Attendances", new {id=course.Id })">Going?</a>
+                        if (Model.AttendedCourses.Contains(course.Id))
+                        {
+                            <a class="btn btn-danger js-toggle-attendance" data-courseId="@course.Id" href="#">
+                                Going
+                            </a>
+                        }
+                        else
+                        {
+                            <a class="btn btn-info js-toggle-attendance" data-courseId="@course.Id" href="#">
+                                Going?
+                            </a>
+                        }
                     }
                 </div>
 
@@ -35,3 +46,53 @@
     }
 </ul>
 <div class="clear"></div>
+
+@section scripts{
+    <script>
+        $(".js-toggle-attendance").click(function (e) {
+            var button = $(e.target);
+            var courseId = button.attr("data-courseId");
+            if (button.hasClass("btn-info")) {
+                addAttend(courseId);
+                button
+                      .removeClass("btn-info")
+                      .addClass("btn-danger")
+                      .text("Going");
+            }
+            else {
+                cancelAttend(courseId);
+                button
+                      .removeClass("btn-danger")
+                      .addClass("btn-info")
+                      .text("Going?");
+            }
+        });
+
+        function addAttend(courseId) {
+            
+            $.post("/api/attendances", { courseId: courseId })
+               .done(function () {
+                   alert("Attend Sucess!");
+                  
+               })
+               .fail(function (xhr, status, error) {
+                   alert(xhr.responseJSON.Message);
+               })
+        }
+
+        function cancelAttend(courseId) {
+            $.ajax({
+                url: "/api/attendances",
+                type: "DELETE",
+                data: { courseId: courseId },
+                success: function (result) {
+                    alert("Cancel Sucess!");
+                },
+                fail: function (xhr, status, error) {
+                    alert(xhr.responseJSON.Message);
+                }
+            });
+        }
+
+    </script>
+}

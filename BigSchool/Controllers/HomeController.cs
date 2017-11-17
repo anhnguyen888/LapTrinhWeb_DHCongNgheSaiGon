@@ -28,12 +28,17 @@ namespace BigSchool.Controllers
                                 .Include(c => c.Category)
                                 .Where(c => c.DateTime > DateTime.Now && c.LecturerId != userId).ToList();
 
+            var listAttended = dbContext.Attendances
+                                .Where(a => a.AttendeeId == userId)
+                                .Select(a => a.CourseId);
+
             var viewModel = new CourseHomePageViewModel()
             {
                 UpCommingCourses = listCourses,
+                AttendedCourses = listAttended,
                 ShowAction = User.Identity.IsAuthenticated
             };
-
+           
             return View(viewModel);
         }
 

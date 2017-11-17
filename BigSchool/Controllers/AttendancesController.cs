@@ -45,5 +45,22 @@ namespace BigSchool.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+
+        public ActionResult Cancel(int? id)
+        {
+            if (id == null)
+                return HttpNotFound();
+
+            var userId = User.Identity.GetUserId();
+            var attendedCourse = dbContext.Attendances.Where(a => a.CourseId == id && a.AttendeeId == userId).FirstOrDefault();
+
+            if (attendedCourse != null)
+            {
+                dbContext.Attendances.Remove(attendedCourse);
+                dbContext.SaveChanges();
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
     }
 }
